@@ -1,6 +1,6 @@
-# ** SenseHat web application **
+# SenseHat web application 
 
-## DOverview
+## Overview
 
 The Sense HAT is an add-on board for Raspberry Pi, equipped with various sensors, an LED matrix, and a joystick. Creating a web application for Sense HAT allows users to remotely interact with and monitor the data from these sensors, providing a user-friendly interface for accessing information and controlling the device.
 
