@@ -8,8 +8,6 @@
     crossorigin="anonymous"></script>
 
 
-<script src="../js/script.js"></script>
-<script src="../js/matrixled.js"></script>
 </body>
 
 </html>

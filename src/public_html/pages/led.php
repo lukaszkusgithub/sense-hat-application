@@ -1,7 +1,7 @@
 <?php include '../components/header.php'; ?>
 
 <div class="led-container">
-    <div class="container">
+    <div class="container-fluid">
         <?php
         function rgb_to_hex($rgb)
         {
@@ -16,9 +16,10 @@
         $numColumns = 8;
         $numRows = 8;
 
-        $command = "python ../../python_scripts/read_ledmatrix.py";
+        $command = "python3 ../../python_scripts/read_ledmatrix.py";
 
         $colors_json = shell_exec($command);
+
         $colors = json_decode($colors_json, true);
 
 
@@ -51,5 +52,8 @@
         ?>
     </div>
 </div>
+
+<script src="../js/matrixled.js"></script>
+
 
 <?php include '../components/footer.php'; ?>

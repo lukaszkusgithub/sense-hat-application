@@ -3,12 +3,44 @@
 	height: inherit;
 }
 
-.led-container .container {
-	width: 80%;
+body .led-container .container-fluid {
+	width: 80% !important;
 	padding: 4rem;
 	border-radius: 10px;
 	background-color: #e0e0e0;
 	box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.led-container .container-fluid .row {
+	width: 100% !important;
+}
+
+.led-container .container-fluid .row .col {
+	width: 10% !important;
+}
+
+@media (min-width: 576px) {
+	.led-container .container-fluid {
+		width: 80% !important;
+	}
+}
+
+@media (min-width: 768px) {
+	.led-container .container-fluid {
+		width: 80% !important;
+	}
+}
+
+@media (min-width: 992px) {
+	.led-container .container-fluid {
+		width: 80% !important;
+	}
+}
+
+@media (min-width: 1200px) {
+	.led-container .container-fluid {
+		width: 80% !important;
+	}
 }
 
 .led-box {
@@ -28,6 +60,7 @@
 
 .led-text {
 	font-weight: bold;
+	font-size: 1vw;
 	background-color: #222222;
 	padding: 5px;
 	border-radius: 5px;

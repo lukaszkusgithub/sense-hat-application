@@ -13,7 +13,7 @@ function changeColor(element) {
 
 		$.ajax({
 			type: "POST",
-			url: "../scripts/set_ledmatrix.php", // Ścieżka do Twojego pliku PHP
+			url: "../scripts/set_ledmatrix.php",
 			data: { color: newColor.substring(1), x: x, y: y },
 			success: function (response) {
 				console.log(response);
