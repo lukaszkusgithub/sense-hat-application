@@ -1,7 +1,3 @@
-function addLeadingZero(number) {
-	return number < 10 ? "0" + number : number;
-}
-
 function updateTable(response, selectedUnit) {
 	$("#measurement-table-pressure tbody").empty();
 

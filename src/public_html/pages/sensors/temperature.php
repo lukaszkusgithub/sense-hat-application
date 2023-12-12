@@ -28,6 +28,7 @@
     </div>
 </div>
 
+
 <script src="../../js/temperature.js"></script>
 
 <?php include '../../components/footer.php'; ?>
