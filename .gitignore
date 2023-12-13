@@ -1,3 +1,11 @@
+# DATA
+src/data/temprature/*
+src/data/humidity/*
+src/data/pressure/*
+src/data/rpy/*
+
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
