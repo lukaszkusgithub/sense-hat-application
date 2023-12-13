@@ -1,34 +1,12 @@
 let myChart;
 
-function createChart(jsonData, folderName) {
-	const labels = jsonData.map(function (entry) {
-		const date = luxon.DateTime.fromFormat(
-			entry.date,
-			"yyyy-MM-dd HH:mm:ss"
-		);
-		return date.toFormat("yyyy-MM-dd HH:mm:ss");
-	});
-
-	const values = jsonData.map(function (entry) {
-		return parseFloat(entry.value);
-	});
-
+function getBasicConfig(labels, folderName) {
 	const config = {
 		type: "scatter",
 		data: {
 			labels: labels,
-			datasets: [
-				{
-					label: "Values",
-					data: values,
-					borderColor: "rgb(176,0,32)",
-					borderWidth: 2,
-					pointRadius: 1,
-					pointBackgroundColor: "rgba(22, 22, 22, 1)",
-				},
-			],
+			datasets: [],
 		},
-
 		options: {
 			scales: {
 				x: {
@@ -53,7 +31,10 @@ function createChart(jsonData, folderName) {
 			},
 			plugins: {
 				legend: {
-					display: false,
+					display: true,
+					labels: {
+						color: "rgb(255, 99, 132)",
+					},
 				},
 				title: {
 					display: true,
@@ -70,6 +51,64 @@ function createChart(jsonData, folderName) {
 			},
 		},
 	};
+	return config;
+}
+
+function createChart(jsonData, folderName) {
+	const labels = jsonData.map(function (entry) {
+		const date = luxon.DateTime.fromFormat(
+			entry.date,
+			"yyyy-MM-dd HH:mm:ss"
+		);
+		return date.toFormat("yyyy-MM-dd HH:mm:ss");
+	});
+
+	let config;
+
+	if (folderName == "rpy") {
+		const roll = jsonData.map(function (entry) {
+			return parseFloat(entry.roll.value);
+		});
+		const pitch = jsonData.map(function (entry) {
+			return parseFloat(entry.pitch.value);
+		});
+		const yaw = jsonData.map(function (entry) {
+			return parseFloat(entry.yaw.value);
+		});
+		config = getBasicConfig(labels, folderName);
+		config.data.datasets.push({
+			label: "Roll",
+			data: roll,
+			pointRadius: 2,
+			pointBackgroundColor: "rgba(176,0,32, 1)",
+		});
+		config.data.datasets.push({
+			label: "Yaw",
+			data: pitch,
+			pointRadius: 2,
+			pointBackgroundColor: "rgba(32,0,176, 1)",
+		});
+		config.data.datasets.push({
+			label: "Pitch",
+			data: yaw,
+			pointRadius: 2,
+			pointBackgroundColor: "rgba(0,176,32, 1)",
+		});
+	} else {
+		const values = jsonData.map(function (entry) {
+			return parseFloat(entry.value);
+		});
+
+		config = getBasicConfig(labels, folderName);
+		config.data.datasets.push({
+			label: folderName,
+			data: values,
+			// borderColor: "rgb(22,22,22)",
+			// borderWidth: 2,
+			pointRadius: 2,
+			pointBackgroundColor: "rgba(176,0,32, 1)",
+		});
+	}
 
 	const ctx = document.getElementById("chart").getContext("2d");
 
@@ -119,7 +158,6 @@ $(document).ready(function () {
 		if (folderName != "") {
 			const selectedFile = $(this).val();
 			const filePath = `../../data/${folderName}/${selectedFile}`;
-			console.log(filePath);
 			$.ajax({
 				url: filePath,
 				type: "GET",

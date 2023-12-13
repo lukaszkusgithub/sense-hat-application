@@ -23,13 +23,3 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@^3"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@^2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon@^1"></script>
-
-    <!-- Style -->
-    <link rel="stylesheet" href="../css/led.css">
-    <link rel="stylesheet" href="../css/charts.css">
-    <link rel="stylesheet" href="../css/sensors.css">
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-
-<body>
-    <?php include 'navbar.html'; ?>

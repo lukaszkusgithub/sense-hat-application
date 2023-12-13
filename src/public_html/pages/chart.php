@@ -1,5 +1,8 @@
 <?php include '../components/header.php'; ?>
 
+<link rel="stylesheet" href="../css/charts.css">
+<?php include '../components/header_end.php'; ?>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,6 +16,7 @@
                     <option value="temperature">Temperature</option>
                     <option value="humidity">Humidity</option>
                     <option value="pressure">Pressure</option>
+                    <option value="rpy">Roll Pitch Yaw</option>
                 </select>
             </li>
             <li class="nav-item">
@@ -29,7 +33,7 @@
     <canvas id="chart" width="400" height="200"></canvas>
 </div>
 
-<script src="../js/temperature_chart.js"></script>
+<script src="../js/chart.js"></script>
 
 
 <?php include '../components/footer.php'; ?>
