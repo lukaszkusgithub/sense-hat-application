@@ -11,7 +11,7 @@ senseHat = SenseHat()
 
 
 def read_data(val, unit):
-    return senseHat.get_accelerometer()[val] if unit == 'degree' else senseHat.get_accelerometer()[val] * degreeToRadianScaller
+    return senseHat.get_orientation()[val] if unit == 'degree' else senseHat.get_orientation()[val] * degreeToRadianScaller
 
 
 def read_pitch(unit):
