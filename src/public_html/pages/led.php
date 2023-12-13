@@ -38,7 +38,9 @@
 
 
                     echo '<div class="col">';
-                    echo '<div onclick="changeColor(this)" class="led-box" style="background-color: ' . $hex_color . '; color: #fff" id="' . $id . '" >';
+                    echo '<div  class="led-box" style="background-color: ' . $hex_color . '; color: #fff" id="' . $id . '" >';
+                    // echo '<div onclick="changeColor(this)" class="led-box" style="background-color: ' . $hex_color . '; color: #fff" id="' . $id . '" >';
+                    echo '<input class="color-picker" type="color" value="' . $hex_color . '">';
                     echo '<div class="led-text">' . $hex_color . '</div>';
                     echo '</div>';
                     echo '</div>';
