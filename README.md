@@ -31,5 +31,26 @@ In the **src** directory run the command
 $ php -S localhost:8080
 ```
 
+## Autostart
+
+In order to enable autostart follow these steps:
+1. Insert `server-autostart.service` from `src` folder inside directory: `/etc/systemd/system/`. 
+2. Modify service file and bash script by setting correct paths.
+3. Change permissions for bash script:
+```console
+$ chmod +x start_server.sh
+```
+4. Start service:
+```console
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable server-autostart.service
+$ sudo systemctl start server-autostart.service
+```
+5. Restart device
+```console
+$ sudo reboot
+```
+
+
 ## License:
 [License](LICENSE)
