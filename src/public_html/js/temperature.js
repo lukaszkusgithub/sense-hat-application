@@ -62,7 +62,7 @@ function getMeasurment() {
 				updateTable(limitedData, selectedUnit);
 			},
 			error: function (error) {
-				console.warn("Błąd podczas wczytywania pliku JSON", error);
+				// console.warn("Błąd podczas wczytywania pliku JSON", error);
 			},
 		});
 	}
