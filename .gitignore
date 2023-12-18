@@ -1,5 +1,5 @@
 # DATA
-src/data/temprature/*
+src/data/temperature/*
 src/data/humidity/*
 src/data/pressure/*
 src/data/rpy/*

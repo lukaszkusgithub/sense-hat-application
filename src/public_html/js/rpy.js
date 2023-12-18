@@ -56,26 +56,54 @@ function updateTable(response, selectedUnit) {
 	}
 }
 
+function getFormattedDate() {
+	const today = new Date();
+
+	const year = today.getFullYear();
+	const month = (today.getMonth() + 1).toString().padStart(2, "0");
+	const day = today.getDate().toString().padStart(2, "0");
+
+	const formattedDate = `${year}-${month}-${day}`;
+	return formattedDate;
+}
+
 function getMeasurment() {
 	var selectedValue = $(".form-select").val();
 	var selectedUnit = $(".unit").val();
-	if (
-		selectedValue > 0 &&
-		(selectedUnit == "rad" || selectedUnit == "degree")
-	) {
+
+	if (selectedValue > 0 && (selectedUnit == "C" || selectedUnit == "F")) {
+		const todayFormatted = getFormattedDate();
+
+		const fileName = `measurements-${todayFormatted}.json`;
+
+		const jsonFilePath = "../../../data/rpy/" + fileName;
+
 		$.ajax({
 			type: "GET",
-			url: "../../scripts/get_rpy.php",
-			data: { limit: selectedValue },
+			url: jsonFilePath,
 			dataType: "json",
 			success: function (response) {
-				updateTable(response, selectedUnit);
+				const limit = selectedValue;
+				const limitedData = response.slice(0, limit);
+				updateTable(limitedData, selectedUnit);
 			},
 			error: function (error) {
-				console.error("Błąd podczas wywoływania funkcji PHP", error);
+				console.error("Błąd podczas wczytywania pliku JSON", error);
 			},
 		});
 	}
 }
 
-setInterval(getMeasurment, 1000);
+$(document).ready(function () {
+	let intervalId;
+
+	$(".select-time").change(function () {
+		var selectedTime = $(this).val();
+
+		if (intervalId) {
+			clearInterval(intervalId);
+		}
+
+		intervalId = setInterval(getMeasurment, selectedTime);
+	});
+});

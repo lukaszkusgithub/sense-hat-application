@@ -1,12 +1,15 @@
 <?php include '../../components/header.php'; ?>
 
+<?php include '../../components/header_end.php'; ?>
+
 <?php include '../../components/navbar_sensors.html'; ?>
 
 <div id="sensor-container">
     <h2>Roll Pitch Yaw </h2>
     <?php include '../../components/dropdown_select.html'; ?>
+    <?php include '../../components/dropdown_select_time.html'; ?>
     <select class="form-select form-select-lg mb-3 unit" aria-label=".form-select-lg example">
-        <option selected>Select unit</option>
+        <option disabled selected>Select unit</option>
         <option value="rad">Rad</option>
         <option value="degree">Degree</option>
     </select>
