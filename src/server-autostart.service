@@ -1,0 +1,10 @@
+[Unit]
+Description=Autostart PHP server after succesfull connection to the wi-fi network
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/home/user/server/start_server.sh
+
+[Install]
+WantedBy=multi-user.target
