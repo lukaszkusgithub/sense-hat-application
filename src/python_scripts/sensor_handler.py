@@ -12,62 +12,70 @@ config = configparser.ConfigParser()
 config.read('../config.ini')
 
 delay_in_seconds = float(config['General']['delay'])
+temperature_sensor = float(config['Sensors']['temperature'])
+humidity_sensor = float(config['Sensors']['humidity'])
+pressure_sensor = float(config['Sensors']['pressure'])
+rpy_sensor = float(config['Sensors']['rpy'])
 exit_program = False
 threads = []
 
 
-def handle_sensor_temperature(sensor_name):
+def handle_sensor_temperature():
     while True:
-        measurement = read_temperature()
-        # print(f"{sensor_name} - Temperature: {measurement} \n\n")
+        read_temperature()
         time.sleep(delay_in_seconds)
 
 
-def handle_sensor_humidity(sensor_name):
+def handle_sensor_humidity():
     while True:
-        measurement = read_humidity()
-        # print(f"{sensor_name} - Humidity: {measurement} \n\n")
+        read_humidity()
         time.sleep(delay_in_seconds)
 
 
-def handle_sensor_pressure(sensor_name):
+def handle_sensor_pressure():
     while True:
-        measurement = read_pressure()
-        # print(f"{sensor_name} - Pressure: {measurement} \n\n")
+        read_pressure()
         time.sleep(delay_in_seconds)
 
 
-def handle_sensor_rpy(sensor_name):
+def handle_sensor_rpy():
     while True:
-        measurement = read_rpy()
-        # print(f"{sensor_name} - RPY: {measurement} \n\n")
+        read_rpy()
         time.sleep(delay_in_seconds)
 
 
-def exit_handler(signum, frame):
+def exit_handler():
     global exit_program
     exit_program = True
     print("Program zakończony.")
     os._exit(0)
 
 
-
 def handle_sigint(sig, frame):
     print("Otrzymano sygnał Ctrl+C. Oczekiwanie na zakończenie wątków...")
-    exit_handler(sig, frame)
+    exit_handler()
 
 
 signal.signal(signal.SIGINT, handle_sigint)
 signal.signal(signal.SIGTERM, handle_sigint)
 
 
-temp = threading.Thread(target=handle_sensor_temperature, args=("Temperature",))
-hum = threading.Thread(target=handle_sensor_humidity, args=("Humidity",))
-press = threading.Thread(target=handle_sensor_pressure, args=("Pressure",))
-rpy = threading.Thread(target=handle_sensor_rpy, args=("RPY",))
+if temperature_sensor == 1:
+    temp = threading.Thread(target=handle_sensor_temperature)
+    threads.append(temp)
 
+if pressure_sensor == 1:
+    press = threading.Thread(target=handle_sensor_pressure)
+    threads.append(press)
 
-threads.extend([temp, hum, press, rpy])
+if rpy_sensor == 1:
+    rpy = threading.Thread(target=handle_sensor_rpy)
+    threads.append(rpy)
+
+if humidity_sensor == 1:
+    hum = threading.Thread(target=handle_sensor_humidity)
+    threads.append(hum)
+
 
 for thread in threads:
     thread.start()
