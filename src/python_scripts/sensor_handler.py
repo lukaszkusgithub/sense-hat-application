@@ -22,28 +22,29 @@ pressure_sensor = float(config['Sensors']['pressure'])
 rpy_sensor = float(config['Sensors']['rpy'])
 exit_program = False
 threads = []
+exit_event = threading.Event()
 
 
-def handle_sensor_temperature():
-    while True:
+def handle_sensor_temperature(exit_event):
+    while not exit_event.is_set():
         read_temperature()
         time.sleep(delay_in_seconds)
 
 
-def handle_sensor_humidity():
-    while True:
+def handle_sensor_humidity(exit_event):
+    while not exit_event.is_set():
         read_humidity()
         time.sleep(delay_in_seconds)
 
 
-def handle_sensor_pressure():
-    while True:
+def handle_sensor_pressure(exit_event):
+    while not exit_event.is_set():
         read_pressure()
         time.sleep(delay_in_seconds)
 
 
-def handle_sensor_rpy():
-    while True:
+def handle_sensor_rpy(exit_event):
+    while not exit_event.is_set():
         read_rpy()
         time.sleep(delay_in_seconds)
 
@@ -51,9 +52,8 @@ def handle_sensor_rpy():
 def exit_handler():
     global exit_program
     exit_program = True
-    print("Program zakończony.")
-    os._exit(0)
-
+    print("Oczekiwanie na zakończenie wątków...")
+    exit_event.set()
 
 def handle_sigint(sig, frame):
     print("Otrzymano sygnał Ctrl+C. Oczekiwanie na zakończenie wątków...")
@@ -65,19 +65,19 @@ signal.signal(signal.SIGTERM, handle_sigint)
 
 
 if temperature_sensor == 1:
-    temp = threading.Thread(target=handle_sensor_temperature)
+    temp = threading.Thread(target=handle_sensor_temperature, args=(exit_event,))
     threads.append(temp)
 
 if pressure_sensor == 1:
-    press = threading.Thread(target=handle_sensor_pressure)
+    press = threading.Thread(target=handle_sensor_pressure, args=(exit_event,))
     threads.append(press)
 
 if rpy_sensor == 1:
-    rpy = threading.Thread(target=handle_sensor_rpy)
+    rpy = threading.Thread(target=handle_sensor_rpy, args=(exit_event,))
     threads.append(rpy)
 
 if humidity_sensor == 1:
-    hum = threading.Thread(target=handle_sensor_humidity)
+    hum = threading.Thread(target=handle_sensor_humidity, args=(exit_event,))
     threads.append(hum)
 
 
@@ -85,8 +85,13 @@ for thread in threads:
     thread.start()
 
 
-for thread in threads:
-    thread.join()
+try:
+    for thread in threads:
+        thread.join()
+
+except KeyboardInterrupt:
+    print("Wykryto Ctrl+C. Oczekiwanie na zakończenie wątków...")
 
 
 
+exit_handler()
