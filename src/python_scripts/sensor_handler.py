@@ -9,6 +9,10 @@ import os
 import configparser
 
 config = configparser.ConfigParser()
+
+script_dir = os.path.dirname(os.path.realpath(__file__))
+os.chdir(script_dir)
+
 config.read('../config.ini')
 
 delay_in_seconds = float(config['General']['delay'])
