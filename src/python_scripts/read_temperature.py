@@ -4,6 +4,8 @@ from sense_emu import SenseHat
 import json
 from datetime import datetime
 import os
+import time
+
 
 
 senseHat = SenseHat()
@@ -16,6 +18,8 @@ def read_measurement(arg="c"):
 
 
 def read_temperature():
+    # start = time.time()
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-u', default=0)
     args = parser.parse_args()
@@ -53,6 +57,10 @@ def read_temperature():
 
         with open(file_path, 'w') as file:
             json.dump(measurements, file, indent=2)
+        
+        # end = time.time()
+        # elapsed_time_in_ms = (end - start) * 1000
+        # print(elapsed_time_in_ms)
 
 
 
