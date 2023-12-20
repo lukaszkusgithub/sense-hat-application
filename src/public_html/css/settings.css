@@ -1,0 +1,24 @@
+#settings {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    max-width: 80%;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+}
+
+#settings_btn {
+    margin: 10px;
+}
+
+.column {
+    width: 50%;
+    float: left;
+    box-sizing: border-box;
+    padding: 5px;
+}
