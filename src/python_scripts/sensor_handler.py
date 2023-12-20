@@ -8,6 +8,23 @@ import signal
 import os
 import configparser
 
+PATH_TO_PRES_DATA = "../data/pressure"
+PATH_TO_RPY_DATA = "../data/rpy"
+PATH_TO_TEMP_DATA = "../data/temperature"
+PATH_TO_HUM_DATA = "../data/humidity"
+
+def check_directory(dir):
+    if not os.path.exists(dir):
+        try:
+            os.makedirs(dir)
+        except Exception as e:
+            print(e)
+
+check_directory(PATH_TO_HUM_DATA)
+check_directory(PATH_TO_PRES_DATA)
+check_directory(PATH_TO_RPY_DATA)
+check_directory(PATH_TO_TEMP_DATA)
+
 config = configparser.ConfigParser()
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -23,7 +40,6 @@ rpy_sensor = float(config['Sensors']['rpy'])
 exit_program = False
 threads = []
 exit_event = threading.Event()
-
 
 def handle_sensor_temperature(exit_event):
     while not exit_event.is_set():
