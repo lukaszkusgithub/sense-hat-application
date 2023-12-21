@@ -1,22 +1,4 @@
-const settings_btn = document.getElementById("settings_btn");
-const settings = document.getElementById("settings");
-const settings_confirm_btn = document.getElementById("settings_confirm_btn")
-let pressure_unit = 'hPa';
-let humidity_unit = 'units';
-let rpy_unit = 'deg';
-let temp_unit = 'C';
 
-settings_btn.addEventListener('click', ()=>{
-    settings.style.display = settings.style.display != 'block' ? 'block' : 'none';
-})
-
-settings_confirm_btn.addEventListener('click', ()=>{
-    temp_unit = document.querySelector('input[name="temp"]:checked').value;
-    humidity_unit = document.querySelector('input[name="hum"]:checked').value;
-    rpy_unit = document.querySelector('input[name="rpy"]:checked').value;
-    pressure_unit = document.querySelector('input[name="pressure"]:checked').value;
-    settings.style.display = settings.style.display != 'block' ? 'block' : 'none';
-})
 
 function updateTemp(response, selectedUnit) {
     let value = selectedUnit === "F" ? (response[0].value * 9) / 5 + 32 : response[0].value;
@@ -33,6 +15,8 @@ function updateHum(response, selectedUnit) {
 }
 
 function updatePres(response, selectedUnit) {
+    const hPa_to_mmHg_Scaller = 0.75006157584566;
+
     let value = selectedUnit === "mmHg" ? response[0].value * hPa_to_mmHg_Scaller : response[0].value;
     value = Math.round(value * 100) / 100
     document.getElementById("pressure_unit").innerHTML = selectedUnit;
@@ -40,6 +24,8 @@ function updatePres(response, selectedUnit) {
 }
 
 function updateRPY(response, selectedUnit) {
+    const degreeToRadianScaller = 0.0174532925;
+
     let valueR = selectedUnit === "rad" ? response[0].roll.value * degreeToRadianScaller : response[0].roll.value;
     let valueP = selectedUnit === "rad" ? response[0].pitch.value * degreeToRadianScaller : response[0].pitch.value;
     let valueY = selectedUnit === "rad" ? response[0].yaw.value * degreeToRadianScaller : response[0].yaw.value;
@@ -55,17 +41,17 @@ function updateRPY(response, selectedUnit) {
 }
 
 function getFormattedDate() {
-	const today = new Date();
+    const today = new Date();
 
-	const year = today.getFullYear();
-	const month = (today.getMonth() + 1).toString().padStart(2, "0");
-	const day = today.getDate().toString().padStart(2, "0");
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, "0");
+    const day = today.getDate().toString().padStart(2, "0");
 
-	const formattedDate = `${year}-${month}-${day}`;
-	return formattedDate;
+    const formattedDate = `${year}-${month}-${day}`;
+    return formattedDate;
 }
 
-function getMeasurment() {
+function getMeasurment(temp_unit, humidity_unit, rpy_unit, pressure_unit) {
     const todayFormatted = getFormattedDate();
 
     const fileName = `measurements-${todayFormatted}.json`;
@@ -131,7 +117,44 @@ function getMeasurment() {
     });
 }
 
+
 $(document).ready(function () {
-    var selectedTime = 100
-    let intervalId = setInterval(getMeasurment, selectedTime);
+    const settings_btn = document.getElementById("settings_btn");
+    const settings = document.getElementById("settings");
+    const settings_confirm_btn = document.getElementById("settings_confirm_btn")
+    let pressure_unit = document.querySelector('input[name="pressure"]:checked').value;
+    let humidity_unit = document.querySelector('input[name="hum"]:checked').value;
+    let rpy_unit = document.querySelector('input[name="rpy"]:checked').value;
+    let temp_unit = document.querySelector('input[name="temp"]:checked').value;;
+
+
+    settings_btn.addEventListener('click', () => {
+        settings.style.display = settings.style.display != 'block' ? 'block' : 'none';
+    })
+
+    settings_confirm_btn.addEventListener('click', () => {
+        temp_unit = document.querySelector('input[name="temp"]:checked').value;
+        humidity_unit = document.querySelector('input[name="hum"]:checked').value;
+        rpy_unit = document.querySelector('input[name="rpy"]:checked').value;
+        pressure_unit = document.querySelector('input[name="pressure"]:checked').value;
+        settings.style.display = settings.style.display != 'block' ? 'block' : 'none';
+    })
+
+    let intervalId;
+
+
+    $(".select-time").change(function () {
+        var selectedTime = $(this).val();
+
+        if (intervalId) {
+            clearInterval(intervalId);
+        }
+
+        intervalId = setInterval(function () {
+            getMeasurment(temp_unit, humidity_unit, rpy_unit, pressure_unit)
+        }, selectedTime);
+    });
+
+    // var selectedTime = 500
+    // let intervalId = setInterval(function() { getMeasurment(temp_unit, humidity_unit, rpy_unit, pressure_unit) }, selectedTime);
 });

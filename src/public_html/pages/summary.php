@@ -45,6 +45,7 @@
                 <label for="mmHg">mmHg</label><br>
             </div>
         </div>
+        <?php include '../components/dropdown_select_time.html'; ?>
     </form>
     <button id="settings_confirm_btn">Confirm</button> 
 </div>
