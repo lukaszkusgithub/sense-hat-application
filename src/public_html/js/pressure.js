@@ -1,6 +1,6 @@
 function updateTable(response, selectedUnit) {
 	$("#measurement-table-pressure tbody").empty();
-
+	console.log("update")
 	const hPa_to_mmHg_Scaller = 0.75006157584566;
 
 	$("#measurement-table-pressure tbody").append(`
