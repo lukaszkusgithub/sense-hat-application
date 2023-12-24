@@ -25,12 +25,26 @@ Backend:
 
 ## 🛠️ Usage 🛠️
 
+### Requirements ⚙️
+
+You have to install on your Raspberry Pi PHP package.
+```console
+$ sudo apt install php
+```
+
+If you wont to use emulator instead of Sense Hat, make sure that it is installed on your device: [Installation guide](https://sense-emu.readthedocs.io/en/v1.1/install.html)
+
 ### PHP built-in server ![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)
 
-Inside `src` folder run following command with proper values:
+Modify `start_server.sh`:
+* set proper paths
+* set port (by default 8080)
+* comment out lines under `"apache server"`
+  
+Now you can start server and sensors reading by typing following command inside `src` folder:
 
 ```
-php -S ip_adress:port
+$ bash start_server.sh
 ```
 
 #### Note❗
@@ -101,7 +115,13 @@ $ sudo systemctl start server-autostart.service
 ```console
 $ sudo reboot
 ```
+### Notes ❗
 
+If you are having any trouble running the app, check:
+* whether the paths in the scripts are correct
+* whether the scripts have been granted permissions
+* whether you are using the appropriate environment
 
 ## License 📄
 [License](LICENSE)
+

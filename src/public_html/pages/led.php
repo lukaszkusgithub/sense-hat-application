@@ -27,7 +27,6 @@
 
         $colors = json_decode($colors_json, true);
 
-
         if ($colors !== null) {
             for ($row = 0; $row < $numRows; $row++) {
                 echo '<div class="row">';
