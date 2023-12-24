@@ -1,10 +1,10 @@
 [Unit]
-Description=Autostart PHP server after succesfull connection to the wi-fi network
+Description=Autostart server and sensors readings after succesfull connection to the wi-fi network
 After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/home/user/server/start_server.sh
+ExecStart=/var/www/sense-hat-application/src/start_server.sh
 
 [Install]
 WantedBy=multi-user.target
