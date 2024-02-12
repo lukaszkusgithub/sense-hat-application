@@ -122,6 +122,13 @@ If you are having any trouble running the app, check:
 * whether the scripts have been granted permissions
 * whether you are using the appropriate environment
 
+## Contributors 🤝
+<div style="display: flex;">
+    <a href="https://github.com/PiotrZb"> 
+      <img src="https://avatars.githubusercontent.com/u/84187115?v=4" height="auto" width="100" style="border-radius:50%; margin: 10px"> 
+    </a> 
+</div>
+
 ## License 📄
 [License](LICENSE)
 
